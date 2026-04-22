@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://loginpage-lwbk.onrender.com/api',
+    baseURL: 'http://localhost:5000/api',
 });
 
 // Automatically add token to headers if it exists
