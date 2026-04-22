@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function VerifyOTP() {
@@ -15,7 +15,7 @@ export default function VerifyOTP() {
     setError('');
     setMsg('');
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/verify-otp', { email, otp });
+      const res = await api.post('/auth/verify-otp', { email, otp });
       setMsg(res.data.message);
       setTimeout(() => navigate('/login'), 2000);
     } catch (err) {

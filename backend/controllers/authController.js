@@ -28,11 +28,17 @@ const register = async (req, res) => {
             otpExpires
         });
 
-        await sendEmailOTP(email, otp);
+        try {
+            await sendEmailOTP(email, otp);
+        } catch (emailError) {
+            console.error('Email sending failed, but user created:', emailError);
+            // Optionally tell the user it was successful but email is delayed
+        }
 
         res.status(201).json({ message: 'User registered. Please check email for OTP.' });
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        console.error('Registration Error:', error);
+        res.status(500).json({ message: 'Server error: ' + error.message });
     }
 };
 

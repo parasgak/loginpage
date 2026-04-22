@@ -9,9 +9,20 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.log('MongoDB error:', err));
+if (!process.env.MONGO_URI) {
+    console.error('CRITICAL ERROR: MONGO_URI is not defined in environment variables!');
+    process.exit(1);
+}
+
+mongoose.connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 5000,
+    family: 4 // Force IPv4
+})
+.then(() => console.log('✅ MongoDB connected successfully'))
+.catch(err => {
+    console.error('❌ MongoDB connection error:');
+    console.error(err);
+});
 
 app.use('/api/auth', authRoutes);
 
