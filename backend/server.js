@@ -9,6 +9,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.get('/', (req, res) => {
+    res.send('Server is running successfully! 🚀');
+});
+
 if (!process.env.MONGO_URI) {
     console.error('CRITICAL ERROR: MONGO_URI is not defined in environment variables!');
     process.exit(1);
